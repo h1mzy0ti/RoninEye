@@ -1,0 +1,144 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoninEye Settings</title>
+    <link rel="stylesheet" href="{% static 'css/styles2.css'%}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Ronin Eye</span>
+                </div>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            <div class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="{%url 'dashboard'%}">
+                            <i class="fas fa-home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{%url 'configuration'%}">
+                            <i class="fas fa-sliders-h"></i>
+                            <span>Configurations</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="{%url 'settings'%}">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{%url 'alerts'%}">
+                            <i class="fas fa-bell"></i>
+                            <span>Alerts</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-user"></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="#">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <button id="mobile-toggle" class="mobile-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1>Settings</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search endpoints...">
+                    </div>
+                    <button class="icon-button">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Configuration Content -->
+            <div class="dashboard-content">
+                <div class="config-header">
+                    <h2>Notifications </h2>
+                    <button class="btn-primary">
+                        <i class="fas fa-plus"></i> Add New Notification
+                    </button>
+                </div>
+
+                <!-- Endpoint Form -->
+                <div class="config-form">
+                    <div class="form-card">
+                        <h3>Add New Notification</h3>
+                        <form id="endpoint-form">
+                            <div class="form-group">
+                                <label for="endpoint-name">Notification Name</label>
+                                <input type="text" id="endpoint-name" placeholder="e.g., User Authentication">
+                            </div>
+                            <div class="form-group">
+                                <label for="endpoint-url">URL</label>
+                                <input type="text" id="endpoint-url" placeholder="e.g., https://api.example.com/users">
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Endpoints Table -->
+                <div class="endpoints-table-container">
+                    <h3>Notifications</h3>
+                    <table class="endpoints-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>URL</th>
+                                <th>Method</th>
+                                <th>Tags</th>
+                                <th>Response Threshold</th>
+                                <th>Error Threshold</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="endpoints-table-body">
+                            <!-- Endpoints will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+    <script src="config.js"></script>
+</body>
+</html>

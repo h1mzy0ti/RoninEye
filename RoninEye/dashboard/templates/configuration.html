@@ -1,0 +1,225 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Configuration - API Performance Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/styles2.css'%}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Ronin Eye</span>
+                </div>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            <div class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="{%url 'dashboard'%}">
+                            <i class="fas fa-home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="{%url 'configuration'%}">
+                            <i class="fas fa-sliders-h"></i>
+                            <span>Configurations</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{%url 'settings'%}">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{%url 'alerts'%}">
+                            <i class="fas fa-bell"></i>
+                            <span>Alerts</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-user"></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="#">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <button id="mobile-toggle" class="mobile-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1>API Configuration</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search endpoints...">
+                    </div>
+                    <button class="icon-button">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Configuration Content -->
+            <div class="dashboard-content">
+                <div class="config-header">
+                    <h2>Endpoint Management</h2>
+                    <button class="btn-primary">
+                        <i class="fas fa-plus"></i> Add New Endpoint
+                    </button>
+                </div>
+
+                <!-- Endpoint Form -->
+                <div class="config-form">
+                    <div class="form-card">
+                        <h3>Add New Endpoint</h3>
+                        <form id="endpoint-form">
+                            <div class="form-group">
+                                <label for="endpoint-name">Endpoint Name</label>
+                                <input type="text" id="endpoint-name" placeholder="e.g., User Authentication">
+                            </div>
+                            <div class="form-group">
+                                <label for="endpoint-url">URL</label>
+                                <input type="text" id="endpoint-url" placeholder="e.g., https://api.example.com/users">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="endpoint-method">Method</label>
+                                    <select id="endpoint-method">
+                                        <option value="GET">GET</option>
+                                        <option value="POST">POST</option>
+                                        <option value="PUT">PUT</option>
+                                        <option value="DELETE">DELETE</option>
+                                        <option value="PATCH">PATCH</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="endpoint-tags">Tags</label>
+                                    <input type="text" id="endpoint-tags" placeholder="e.g., auth, users">
+                                </div>
+                            </div>
+                
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="requires-auth"> Requires Authentication
+                                </label>
+                            </div>
+                
+                            <div id="auth-section" style="display: none;">
+                                <div class="form-group">
+                                    <label for="auth-type">Auth Type</label>
+                                    <select id="auth-type">
+                                        <option value="Bearer">Bearer Token (JWT)</option>
+                                        <option value="Basic">Basic Auth</option>
+                                        <option value="APIKey">API Key</option>
+                                        <option value="Custom">Custom Header</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="auth-token">Token / Credentials</label>
+                                    <input type="text" id="auth-token" placeholder="e.g., eyJhbGciOiJIUzI1NiIsIn...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="auth-header-key">Header Key (optional)</label>
+                                    <input type="text" id="auth-header-key" placeholder="e.g., Authorization, x-api-key">
+                                </div>
+                                <div class="form-group">
+                                    <label for="refresh-url">Token Refresh URL (optional)</label>
+                                    <input type="text" id="refresh-url" placeholder="e.g., https://api.example.com/token/refresh">
+                                </div>
+                            </div>
+                
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="response-threshold">Response Time Threshold (ms)</label>
+                                    <input type="number" id="response-threshold" value="300">
+                                </div>
+                                <div class="form-group">
+                                    <label for="error-threshold">Error Rate Threshold (%)</label>
+                                    <input type="number" id="error-threshold" value="5">
+                                </div>
+                            </div>
+                
+                            <div class="form-group">
+                                <label for="monitoring-interval">Monitoring Interval (minutes)</label>
+                                <select id="monitoring-interval">
+                                    <option value="1">1 minute</option>
+                                    <option value="5" selected>5 minutes</option>
+                                    <option value="15">15 minutes</option>
+                                    <option value="30">30 minutes</option>
+                                    <option value="60">60 minutes</option>
+                                </select>
+                            </div>
+                
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Save Endpoint</button>
+                                <button type="button" class="btn-secondary">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <script>
+                    // Toggle auth section display
+                    document.getElementById('requires-auth').addEventListener('change', function () {
+                        const authSection = document.getElementById('auth-section');
+                        authSection.style.display = this.checked ? 'block' : 'none';
+                    });
+                </script>
+                
+
+                <!-- Endpoints Table -->
+                <div class="endpoints-table-container">
+                    <h3>Monitored Endpoints</h3>
+                    <table class="endpoints-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>URL</th>
+                                <th>Method</th>
+                                <th>Tags</th>
+                                <th>Response Threshold</th>
+                                <th>Error Threshold</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="endpoints-table-body">
+                            <!-- Endpoints will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+    <script src="config.js"></script>
+</body>
+</html>

@@ -1,0 +1,253 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoninEye - API Performance Monitoring & Analytics</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <div class="logo">
+                    <img src="logo.svg" alt="RoninEye Logo">
+                    <span>RoninEye</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#about">About Us</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="auth-buttons">
+                    <a href="#" class="btn btn-secondary">Login</a>
+                    <a href="#" class="btn btn-primary">Sign Up</a>
+                </div>
+                <div class="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+
+        <div class="hero container">
+            <div class="hero-content">
+                <h1>Monitor Your API Performance with Precision</h1>
+                <p>RoninEye provides real-time analytics and monitoring for your APIs, helping you identify issues before they impact your users.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary">Get Started</a>
+                    <a href="#" class="btn btn-outline">See Demo</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="dashboard-preview">
+                    <div class="dashboard-header">
+                        <div class="dashboard-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="dashboard-title">API Performance Dashboard</div>
+                    </div>
+                    <div class="dashboard-content">
+                        <div class="chart-container">
+                            <canvas id="responseTimeChart"></canvas>
+                        </div>
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <h3>Avg. Response Time</h3>
+                                <p class="metric-value">124<span>ms</span></p>
+                            </div>
+                            <div class="metric-card">
+                                <h3>Error Rate</h3>
+                                <p class="metric-value">0.8<span>%</span></p>
+                            </div>
+                            <div class="metric-card">
+                                <h3>Uptime</h3>
+                                <p class="metric-value">99.9<span>%</span></p>
+                            </div>
+                            <div class="metric-card">
+                                <h3>Total Requests</h3>
+                                <p class="metric-value">1.2M</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Powerful Features</h2>
+                <p>Everything you need to monitor and optimize your API performance</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="metrics-icon.svg" alt="Real-Time Metrics">
+                    </div>
+                    <h3>Real-Time Metrics Collection</h3>
+                    <ul>
+                        <li>Average response time tracking</li>
+                        <li>Error rate monitoring</li>
+                        <li>Status code breakdown</li>
+                        <li>Uptime/downtime duration</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="dashboard-icon.svg" alt="Interactive Dashboard">
+                    </div>
+                    <h3>Interactive Dashboard</h3>
+                    <ul>
+                        <li>Line charts for trends</li>
+                        <li>Radial bars for uptime</li>
+                        <li>Pie/donut charts for error types</li>
+                        <li>Heatmaps for failure patterns</li>
+                        <li>Filter by date, endpoint, or method</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="history-icon.svg" alt="Historical Data">
+                    </div>
+                    <h3>Historical Data & Trends</h3>
+                    <ul>
+                        <li>View past performance data</li>
+                        <li>Compare time periods</li>
+                        <li>Spot regressions or improvements</li>
+                        <li>Long-term trend analysis</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Start Monitoring Your APIs Today</h2>
+            <p>Join hundreds of companies that trust RoninEye for their API monitoring needs.</p>
+            <a href="#" class="btn btn-primary">Get Started for Free</a>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>About Us</h2>
+                <p>The team behind RoninEye</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="team.svg" alt="RoninEye Team">
+                </div>
+                <div class="about-text">
+                    <p>RoninEye was founded in 2023 by a team of developers who were frustrated with the lack of comprehensive API monitoring tools on the market.</p>
+                    <p>Our mission is to provide developers and businesses with the tools they need to ensure their APIs are performing optimally, helping them deliver better experiences to their users.</p>
+                    <p>With a team of experienced engineers and designers, we're committed to building the most powerful and user-friendly API monitoring platform available.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Contact Us</h2>
+                <p>Have questions? We're here to help.</p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <div class="info-item">
+                        <h3>Email</h3>
+                        <p>info@ronineye.com</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>Phone</h3>
+                        <p>+91 6281928272</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>Address</h3>
+                        <p>123 Tech Street<br>Bangalore, KA 560043</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <img src="twitter.svg" alt="Twitter">
+                        </a>
+                        <a href="#" class="social-link">
+                            <img src="linkedin.svg" alt="LinkedIn">
+                        </a>
+                        <a href="#" class="social-link">
+                            <img src="github.svg" alt="GitHub">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="logo.svg" alt="logo">
+                    <span>RoninEye</span>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Product</h3>
+                        <a href="#">Features</a>
+                        <a href="#">API</a>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Company</h3>
+                        <a href="#">About Us</a>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <a href="#">Support</a>
+                        <a href="#">Contact</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Made by Himjyoti</p>
+                <p>&copy; 2025 RoninEye. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
