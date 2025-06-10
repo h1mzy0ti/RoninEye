@@ -1,0 +1,156 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoninEye Profile</title>
+    <link rel="stylesheet" href="{% static 'css/styles2.css'%}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="{% static 'image/logo_no_bgpng.png' %}" alt="Ronin Eye Logo" style="width: 58px; height: auto; display: block;" />
+                    <span>Ronin Eye</span>
+                </div>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            <div class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="{%url 'dashboard'%}">
+                            <i class="fas fa-home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{%url 'configuration'%}">
+                            <i class="fas fa-sliders-h"></i>
+                            <span>Configurations</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{%url 'settings'%}">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{%url 'alerts' %}">
+                            <i class="fas fa-bell"></i>
+                            <span>Alerts</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="{% url 'profile' %}">
+                            <i class="fas fa-user"></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+            <a href="{% url 'logout' %}">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+        </div>
+
+        <!-- Main Content -->
+<div class="main-content">
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <button id="mobile-toggle" class="mobile-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1>Profile</h1>
+        </div>
+        <div class="header-right">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search endpoints...">
+            </div>
+            <button class="icon-button">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Dashboard Content Wrapper -->
+    <div class="dashboard-content">
+        
+        <!-- Profile Info Header -->
+        <div class="config-header">
+            <h2>Profile Info</h2>
+        </div>
+
+        <!-- User Profile Section -->
+        <div class="config-form">
+    <div class="form-card">
+        <div class="user-greeting">
+            <h3>Hi, {{ request.user.username }}!</h3>
+            <p>Welcome back!</p>
+        </div>
+        <br>
+
+        <div class="profile-details">
+            <div class="profile-item">
+                <label>Username - </label>
+                <div class="value">{{ request.user.username }}</div>
+            </div>
+            <br>
+            <div class="profile-item">
+                <label>Email - </label>
+                <div class="value">{{ request.user.email }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <!-- Password Reset Section -->
+        <div class="config-form">
+            <div class="form-card">
+                <h3>Reset Password</h3>
+                <form id="password-reset-form">
+                    <div class="form-group">
+                        <label for="current-password">Current Password</label>
+                        <input type="password" id="current-password" placeholder="Enter your current password">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-password">New Password</label>
+                        <input type="password" id="new-password" placeholder="Enter your new password">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm New Password</label>
+                        <input type="password" id="confirm-password" placeholder="Confirm your new password">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            Reset Password
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        
+    </div> <!-- End of dashboard-content -->
+</div> <!-- End of main-content -->
+
+    <script src="dashboard.js"></script>
+    <script src="config.js"></script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-/* Base Styles */
+25/* Base Styles */
 :root {
     --primary-color: #4f46e5;
     --primary-hover: #4338ca;
@@ -381,10 +381,9 @@ button {
 }
 
 .chart-content {
-    padding: 1.25rem;
-    height: 300px;
+    padding-bottom: 2rem !important; /* extra bottom space for labels */
+    overflow: visible !important;
 }
-
 /* Alerts Container */
 .alerts-container {
     max-height: 400px;

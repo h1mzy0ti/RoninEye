@@ -9,6 +9,185 @@
     <script src="{% static 'js/script.js' %}"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .dashboard-section {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            min-height: 500px;
+        }
+
+        .content-left {
+            flex: 1;
+        }
+
+        .content-left h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #2d3748;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .content-left p {
+            font-size: 1.125rem;
+            color: #718096;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background-color: #6366f1;
+            color: white;
+            border: none;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #6366f1;
+            border: 2px solid #6366f1;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Dashboard Widget with Background Image */
+        .dashboard-widget {
+            flex: 1;
+            background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Overlay for better text readability */
+        .dashboard-widget::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.8), rgba(139, 92, 246, 0.6));
+            border-radius: 16px;
+        }
+
+        .widget-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .widget-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .status-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot.red { background-color: #ef4444; }
+        .dot.yellow { background-color: #f59e0b; }
+        .dot.green { background-color: #10b981; }
+
+        .widget-title {
+            color: white;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }   
+
+        .metric-label {
+            color: rgba(255, 255, 255, 0.695);
+            font-size: 0.875rem;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .metric-value {
+            color: rgb(245, 241, 241);
+            font-size: 2rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-section {
+                flex-direction: column;
+                gap: 40px;
+            }
+            
+            .content-left h1 {
+                font-size: 2rem;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+        }
+    </style>
+
+
 </head>
 <body>
     <header>
@@ -25,8 +204,8 @@
                     <a href="#contact">Contact</a>
                 </div>
                 <div class="auth-buttons">
-                    <a href="#" class="btn btn-secondary">Login</a>
-                    <a href="#" class="btn btn-primary">Sign Up</a>
+                    <a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary">Sign Up</a>
                 </div>
                 <div class="menu-toggle">
                     <span></span>
@@ -41,41 +220,41 @@
                 <h1>Monitor Your API Performance with Precision</h1>
                 <p>RoninEye provides real-time analytics and monitoring for your APIs, helping you identify issues before they impact your users.</p>
                 <div class="hero-buttons">
-                    <a href="#" class="btn btn-primary">Get Started</a>
-                    <a href="#" class="btn btn-outline">See Demo</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary">Get Started</a>
+                    <a href="{%  url 'documentation' %}" class="btn btn-outline">Learn More</a>
                 </div>
             </div>
-            <div class="hero-image">
-                <div class="dashboard-preview">
-                    <div class="dashboard-header">
-                        <div class="dashboard-dots">
-                            <span></span>
-                            <span></span>
-                            <span></span>
+            
+            <div class="dashboard-widget">
+                <div class="widget-content">
+                    <div class="widget-header">
+                        <div class="status-dots">
+                            <div class="dot red"></div>
+                            <div class="dot yellow"></div>
+                            <div class="dot green"></div>
                         </div>
-                        <div class="dashboard-title">API Performance Dashboard</div>
+                        <span class="widget-title">API Performance Dashboard</span>
                     </div>
-                    <div class="dashboard-content">
-                        <div class="chart-container">
-                            <canvas id="responseTimeChart"></canvas>
+                    
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-label">Avg. Response Time</div>
+                            <div class="metric-value">124ms</div>
                         </div>
-                        <div class="metrics-grid">
-                            <div class="metric-card">
-                                <h3>Avg. Response Time</h3>
-                                <p class="metric-value">124<span>ms</span></p>
-                            </div>
-                            <div class="metric-card">
-                                <h3>Error Rate</h3>
-                                <p class="metric-value">0.8<span>%</span></p>
-                            </div>
-                            <div class="metric-card">
-                                <h3>Uptime</h3>
-                                <p class="metric-value">99.9<span>%</span></p>
-                            </div>
-                            <div class="metric-card">
-                                <h3>Total Requests</h3>
-                                <p class="metric-value">1.2M</p>
-                            </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-label">Error Rate</div>
+                            <div class="metric-value">0.8%</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-label">Uptime</div>
+                            <div class="metric-value">99.9%</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-label">Total Requests</div>
+                            <div class="metric-value">1.2M</div>
                         </div>
                     </div>
                 </div>
@@ -93,7 +272,7 @@
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <img src="metrics-icon.svg" alt="Real-Time Metrics">
+                        <img src="{% static 'image/image-T3qYlSLKV0Nh0PeSRW3YIPVgA0Mkqy.png' %}" alt="Real-Time Metrics">
                     </div>
                     <h3>Real-Time Metrics Collection</h3>
                     <ul>
@@ -106,7 +285,7 @@
                 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <img src="dashboard-icon.svg" alt="Interactive Dashboard">
+                        <img src="{% static 'image/dashbaord.png' %}" alt="Interactive Dashboard">
                     </div>
                     <h3>Interactive Dashboard</h3>
                     <ul>
@@ -120,7 +299,7 @@
                 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <img src="history-icon.svg" alt="Historical Data">
+                        <img src="{% static 'image/history.png' %}" alt="Historical Data">
                     </div>
                     <h3>Historical Data & Trends</h3>
                     <ul>
@@ -249,6 +428,6 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="{% static 'script.js' %}"></script>
 </body>
 </html>

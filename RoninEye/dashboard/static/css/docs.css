@@ -1,0 +1,85 @@
+/* 1. Header Alignment Fix */
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* 2. Main Container Centering */
+.docs-container {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+/* 3. Sidebar Cleanup */
+.docs-sidebar {
+  position: sticky;
+  top: 5rem;
+  height: calc(100vh - 5rem);
+  overflow-y: auto;
+  padding-right: 1rem;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+/* 4. Tab Buttons Alignment */
+.docs-tab-buttons {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* 5. Tab Button Consistency */
+.docs-tab-btn {
+  padding: 0.5rem 1rem;
+  background: none;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition);
+  border-bottom: 2px solid transparent;
+}
+
+/* 6. Article Alignment */
+.docs-article {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* 7. Footer Alignment */
+.docs-footer .footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* 8. Breadcrumb Spacing Fix */
+.docs-breadcrumb {
+  margin-left: 0.25rem;
+}
+
+/* 9. Pagination Alignment */
+.docs-pagination {
+  max-width: 800px;
+  margin: 3rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+}

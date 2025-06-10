@@ -1,259 +1,214 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dashboard</title>
-    <link rel="stylesheet" href="{% static 'css/styles2.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/styles2.css' %}" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
 </head>
-<style>
-    /* Modal background */
-    .modal-overlay {
-      display: none; 
-      position: fixed; 
-      top: 0; left: 0; 
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.5); 
-      justify-content: center; 
-      align-items: center;
-      z-index: 1000;
-    }
-
-    /* Modal box */
-    .modal {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      min-width: 250px;
-      max-width: 300px;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-
-    .modal .content {
-      margin-bottom: 20px;
-    }
-
-    .modal button {
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .modal button:hover {
-      background-color: #0056b3;
-    }
-</style>
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <div class="dashboard">
-        <!-- Sidebar -->
-        <div class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <div class="logo">
-                    <img src="{% static 'image/logo_no_bgpng.png' %}" alt="Ronin Eye Logo" style="width: 60px; height: auto;" />
-                    <span>Ronin Eye</span>
-                </div>
-                <button id="sidebar-toggle" class="sidebar-toggle">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <img src="{% static 'image/logo_no_bgpng.png' %}" alt="Ronin Eye Logo"
+                    style="width: 58px; height: auto; display: block;" />
+                <span>Ronin Eye</span>
             </div>
-            <div class="sidebar-menu">
-                <ul>
-                    <li class="active">
-                        <a href="{%url 'dashboard'%}">
-                            <i class="fas fa-home"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'configuration' %}">
-                            <i class="fas fa-sliders-h"></i>
-                            <span>Configurations</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{%url 'settings'%}">
-                            <i class="fas fa-cog"></i>
-                            <span>Settings</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{%url 'alerts'%}">
-                            <i class="fas fa-bell"></i>
-                            <span>Alerts</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fas fa-user"></i>
-                            <span>Profile</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="sidebar-footer">
-                <a href="#">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Logout</span>
-                </a>
-            </div>
+            <button id="sidebar-toggle" class="sidebar-toggle">
+                <i class="fas fa-chevron-left"></i>
+            </button>
         </div>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Header -->
-            <header class="header">
-                <div class="header-left">
-                    <button id="mobile-toggle" class="mobile-toggle">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <h1>Performance Dashboard</h1>
-                </div>
-                <div class="header-right">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search endpoints...">
-                    </div>
-                    <div class="time-filter">
-                        <select id="time-range">
-                            <option value="1h">Last hour</option>
-                            <option value="6h">Last 6 hours</option>
-                            <option value="24h" selected>Last 24 hours</option>
-                            <option value="7d">Last 7 days</option>
-                            <option value="30d">Last 30 days</option>
-                        </select>
-                    </div>
-                    <button class="icon-button">
+        <div class="sidebar-menu">
+            <ul>
+                <li class="active">
+                    <a href="{% url 'dashboard' %}">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'configuration' %}">
+                        <i class="fas fa-sliders-h"></i>
+                        <span>Configurations</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'settings' %}">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'alerts' %}">
                         <i class="fas fa-bell"></i>
-                        <span class="badge">3</span>
-                    </button>
-                </div>
-            </header>
+                        <span>Alerts</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'profile' %}">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-            <!-- Dashboard Content -->
-            <div class="dashboard-content">
-                <!-- Metrics Overview -->
-                <div class="metrics-overview">
-                    <div class="metric-card">
-                        <div class="metric-header">
-                            <h3>Avg Response Time</h3>
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="metric-value">
-                            <h2 id="avg-response-time">142.5ms</h2>
-                            <p class="status good">Good</p>
+        <div class="sidebar-footer">
+            <a href="{% url 'logout' %}">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button id="mobile-toggle" class="mobile-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1>Performance Dashboard</h1>
+            </div>
+            <div class="header-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search endpoints..." />
+                </div>
+                <div class="time-filter">
+                    <select id="time-range">
+                        <option value="1h">Last hour</option>
+                        <option value="6h">Last 6 hours</option>
+                        <option value="24h" selected>Last 24 hours</option>
+                        <option value="7d">Last 7 days</option>
+                        <option value="30d">Last 30 days</option>
+                    </select>
+                </div>
+                <button class="icon-button">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+
+            <!-- Metrics Overview -->
+            <div class="metrics-overview">
+                <!-- Metric cards -->
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <h3>Avg Response Time</h3>
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="metric-value">
+                        <h2 id="avg-response-time">-- ms</h2>
+                        <p class="status" id="response-time-status">--</p>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <h3>Error Rate</h3>
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="metric-value">
+                        <h2 id="error-rate">-- %</h2>
+                        <p class="status" id="error-rate-status">--</p>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <h3>Uptime</h3>
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="metric-value">
+                        <h2 id="uptime">-- %</h2>
+                        <p class="status" id="uptime-status">--</p>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <h3>Requests/Min</h3>
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="metric-value">
+                        <h2 id="requests-per-min">--</h2>
+                        <p class="status">--</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row 1 -->
+            <div class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Response Time Trends</h3>
+                        <div class="chart-actions">
+                            <button class="icon-button small"><i class="fas fa-expand"></i></button>
+                            <button class="icon-button small"><i class="fas fa-ellipsis-v"></i></button>
                         </div>
                     </div>
-                    <div class="metric-card">
-                        <div class="metric-header">
-                            <h3>Error Rate</h3>
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
-                        <div class="metric-value">
-                            <h2 id="error-rate">2.4%</h2>
-                            <p class="status good">Good</p>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-header">
-                            <h3>Uptime</h3>
-                            <i class="fas fa-server"></i>
-                        </div>
-                        <div class="metric-value">
-                            <h2 id="uptime">99.8%</h2>
-                            <p class="status excellent">Excellent</p>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-header">
-                            <h3>Requests/Min</h3>
-                            <i class="fas fa-exchange-alt"></i>
-                        </div>
-                        <div class="metric-value">
-                            <h2 id="requests-per-min">1,245</h2>
-                            <p class="status">~74,700 per hour</p>
-                        </div>
+                    <div class="chart-content">
+                        <div id="response-time-chart"></div>
                     </div>
                 </div>
 
-                <!-- Charts Row 1 -->
-                <div class="charts-row">
-                    <div class="chart-card">
-                        <div class="chart-header">
-                            <h3>Response Time Trends</h3>
-                            <div class="chart-actions">
-                                <button class="icon-button small">
-                                    <i class="fas fa-expand"></i>
-                                </button>
-                                <button class="icon-button small">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="chart-content">
-                            <div id="response-time-chart"></div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Error Rate Analysis</h3>
+                        <div class="chart-actions">
+                            <button class="icon-button small"><i class="fas fa-expand"></i></button>
+                            <button class="icon-button small"><i class="fas fa-ellipsis-v"></i></button>
                         </div>
                     </div>
-                    <div class="chart-card">
-                        <div class="chart-header">
-                            <h3>Error Rate Analysis</h3>
-                            <div class="chart-actions">
-                                <button class="icon-button small">
-                                    <i class="fas fa-expand"></i>
-                                </button>
-                                <button class="icon-button small">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                            </div>
+                    <div class="chart-content">
+                        <div id="error-rate-chart"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row 2 -->
+            <div class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Status Code Distribution</h3>
+                        <div class="chart-actions">
+                            <button class="icon-button small"><i class="fas fa-expand"></i></button>
+                            <button class="icon-button small"><i class="fas fa-ellipsis-v"></i></button>
                         </div>
-                        <div class="chart-content">
-                            <div id="error-rate-chart"></div>
-                        </div>
+                    </div>
+                    <div class="chart-content">
+                        <div id="status-code-chart"></div>
                     </div>
                 </div>
 
-                <!-- Charts Row 2 -->
-                <div class="charts-row">
-                    <div class="chart-card">
-                        <div class="chart-header">
-                            <h3>Status Code Distribution</h3>
-                            <div class="chart-actions">
-                                <button class="icon-button small">
-                                    <i class="fas fa-expand"></i>
-                                </button>
-                                <button class="icon-button small">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="chart-content">
-                            <div id="status-code-chart"></div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Uptime Monitor</h3>
+                        <div class="chart-actions">
+                            <button class="icon-button small"><i class="fas fa-expand"></i></button>
+                            <button class="icon-button small"><i class="fas fa-ellipsis-v"></i></button>
                         </div>
                     </div>
-                    <div class="chart-card">
-                        <div class="chart-header">
-                            <h3>Uptime Monitor</h3>
-                            <div class="chart-actions">
-                                <button class="icon-button small">
-                                    <i class="fas fa-expand"></i>
-                                </button>
-                                <button class="icon-button small">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="chart-content">
-                            <div id="uptime-chart"></div>
-                        </div>
+                    <div class="chart-content">
+                        <div id="uptime-chart"></div>
                     </div>
                 </div>
+            </div>
 
                 <!-- Charts Row 3 -->
                 <div class="charts-row">
@@ -261,12 +216,8 @@
                         <div class="chart-header">
                             <h3>Request Volume</h3>
                             <div class="chart-actions">
-                                <button class="icon-button small">
-                                    <i class="fas fa-expand"></i>
-                                </button>
-                                <button class="icon-button small">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
+                                <button class="icon-button small"><i class="fas fa-expand"></i></button>
+                                <button class="icon-button small"><i class="fas fa-ellipsis-v"></i></button>
                             </div>
                         </div>
                         <div class="chart-content">
@@ -275,95 +226,33 @@
                     </div>
                 </div>
 
-                <!-- Charts Row 4 -->
-                <div class="charts-row">
-                    <div class="chart-card">
-                        <div class="chart-header">
-                            <h3>Top Failing Endpoints</h3>
-                            <div class="chart-actions">
-                                <button class="icon-button small">
-                                    <i class="fas fa-expand"></i>
-                                </button>
-                                <button class="icon-button small">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="chart-content">
-                            <div id="failing-endpoints-chart"></div>
-                        </div>
+            <!-- Heatmap Row -->
+            <div class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Hourly API Calls Heatmap</h3>
                     </div>
-                    <div class="chart-card">
-                        <div class="chart-header">
-                            <h3>SLA Breach Count</h3>
-                            <div class="chart-actions">
-                                <button class="icon-button small">
-                                    <i class="fas fa-expand"></i>
-                                </button>
-                                <button class="icon-button small">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="chart-content">
-                            <div id="sla-breach-chart"></div>
-                        </div>
+                    <div class="chart-content">
+                        <div id="heatmap-calls-chart"></div>
                     </div>
                 </div>
 
-                <!-- Charts Row 5 -->
-                <div class="charts-row">
-                    <div class="chart-card full-width">
-                        <div class="chart-header">
-                            <h3>Heatmap of Errors by Hour & Day</h3>
-                            <div class="chart-actions">
-                                <button class="icon-button small">
-                                    <i class="fas fa-expand"></i>
-                                </button>
-                                <button class="icon-button small">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="chart-content">
-                            <div id="error-heatmap-chart"></div>
-                        </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Hourly Errors Heatmap</h3>
+                    </div>
+                    <div class="chart-content">
+                        <div id="heatmap-errors-chart"></div>
                     </div>
                 </div>
-
-                <!-- Alerts Section -->
-                <div class="charts-row">
-                    <div class="chart-card full-width">
-                        <div class="chart-header">
-                            <h3><i class="fas fa-exclamation-triangle"></i> Alerts & Insights</h3>
-                            <div class="chart-actions">
-                                <button class="icon-button small">
-                                    <i class="fas fa-expand"></i>
-                                </button>
-                                <button class="icon-button small" onclick="togglePopupMenu(event)">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                
-                                <!-- Popup Menu -->
-                                <div class="popup-menu" id="popupMenu">
-                                    <div class="popup-content">... contents</div>
-                                    <button onclick="alert('Alert button clicked!')">Alerts</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chart-content">
-                            <div class="alerts-container" id="alerts-container">
-                                <!-- Alerts will be dynamically added here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
             </div>
-        </div>
-    </div>
 
-    <script src="{% static 'js/config.js' %}"></script>
-    <script src="{% static 'js/charts.js' %}"></script>
+        </div> <!-- End of dashboard-content -->
+    </div> <!-- End of main-content -->
+
+</div> <!-- End of dashboard wrapper -->
+
+<script src="dashboard.js"></script>
+<script src="{% static 'charts.js' %}"></script>
 </body>
 </html>

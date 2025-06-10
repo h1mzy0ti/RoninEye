@@ -15,7 +15,7 @@
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="logo">
-                    <i class="fas fa-chart-line"></i>
+                    <img src="{% static 'image/logo_no_bgpng.png' %}" alt="Ronin Eye Logo" style="width: 58px; height: auto; display: block;" />
                     <span>Ronin Eye</span>
                 </div>
                 <button id="sidebar-toggle" class="sidebar-toggle">
@@ -49,7 +49,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{% url 'profile' %}">
                             <i class="fas fa-user"></i>
                             <span>Profile</span>
                         </a>
@@ -57,169 +57,144 @@
                 </ul>
             </div>
             <div class="sidebar-footer">
-                <a href="#">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Logout</span>
-                </a>
-            </div>
+            <a href="{% url 'logout' %}">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
         </div>
 
         <!-- Main Content -->
-        <div class="main-content">
-            <!-- Header -->
-            <header class="header">
-                <div class="header-left">
-                    <button id="mobile-toggle" class="mobile-toggle">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <h1>API Configuration</h1>
-                </div>
-                <div class="header-right">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search endpoints...">
-                    </div>
-                    <button class="icon-button">
-                        <i class="fas fa-bell"></i>
-                        <span class="badge">3</span>
-                    </button>
-                </div>
-            </header>
-
-            <!-- Configuration Content -->
-            <div class="dashboard-content">
-                <div class="config-header">
-                    <h2>Endpoint Management</h2>
-                    <button class="btn-primary">
-                        <i class="fas fa-plus"></i> Add New Endpoint
-                    </button>
-                </div>
-
-                <!-- Endpoint Form -->
-                <div class="config-form">
-                    <div class="form-card">
-                        <h3>Add New Endpoint</h3>
-                        <form id="endpoint-form">
-                            <div class="form-group">
-                                <label for="endpoint-name">Endpoint Name</label>
-                                <input type="text" id="endpoint-name" placeholder="e.g., User Authentication">
-                            </div>
-                            <div class="form-group">
-                                <label for="endpoint-url">URL</label>
-                                <input type="text" id="endpoint-url" placeholder="e.g., https://api.example.com/users">
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="endpoint-method">Method</label>
-                                    <select id="endpoint-method">
-                                        <option value="GET">GET</option>
-                                        <option value="POST">POST</option>
-                                        <option value="PUT">PUT</option>
-                                        <option value="DELETE">DELETE</option>
-                                        <option value="PATCH">PATCH</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="endpoint-tags">Tags</label>
-                                    <input type="text" id="endpoint-tags" placeholder="e.g., auth, users">
-                                </div>
-                            </div>
-                
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" id="requires-auth"> Requires Authentication
-                                </label>
-                            </div>
-                
-                            <div id="auth-section" style="display: none;">
-                                <div class="form-group">
-                                    <label for="auth-type">Auth Type</label>
-                                    <select id="auth-type">
-                                        <option value="Bearer">Bearer Token (JWT)</option>
-                                        <option value="Basic">Basic Auth</option>
-                                        <option value="APIKey">API Key</option>
-                                        <option value="Custom">Custom Header</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="auth-token">Token / Credentials</label>
-                                    <input type="text" id="auth-token" placeholder="e.g., eyJhbGciOiJIUzI1NiIsIn...">
-                                </div>
-                                <div class="form-group">
-                                    <label for="auth-header-key">Header Key (optional)</label>
-                                    <input type="text" id="auth-header-key" placeholder="e.g., Authorization, x-api-key">
-                                </div>
-                                <div class="form-group">
-                                    <label for="refresh-url">Token Refresh URL (optional)</label>
-                                    <input type="text" id="refresh-url" placeholder="e.g., https://api.example.com/token/refresh">
-                                </div>
-                            </div>
-                
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="response-threshold">Response Time Threshold (ms)</label>
-                                    <input type="number" id="response-threshold" value="300">
-                                </div>
-                                <div class="form-group">
-                                    <label for="error-threshold">Error Rate Threshold (%)</label>
-                                    <input type="number" id="error-threshold" value="5">
-                                </div>
-                            </div>
-                
-                            <div class="form-group">
-                                <label for="monitoring-interval">Monitoring Interval (minutes)</label>
-                                <select id="monitoring-interval">
-                                    <option value="1">1 minute</option>
-                                    <option value="5" selected>5 minutes</option>
-                                    <option value="15">15 minutes</option>
-                                    <option value="30">30 minutes</option>
-                                    <option value="60">60 minutes</option>
-                                </select>
-                            </div>
-                
-                            <div class="form-actions">
-                                <button type="submit" class="btn-primary">Save Endpoint</button>
-                                <button type="button" class="btn-secondary">Cancel</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                
-                <script>
-                    // Toggle auth section display
-                    document.getElementById('requires-auth').addEventListener('change', function () {
-                        const authSection = document.getElementById('auth-section');
-                        authSection.style.display = this.checked ? 'block' : 'none';
-                    });
-                </script>
-                
-
-                <!-- Endpoints Table -->
-                <div class="endpoints-table-container">
-                    <h3>Monitored Endpoints</h3>
-                    <table class="endpoints-table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>URL</th>
-                                <th>Method</th>
-                                <th>Tags</th>
-                                <th>Response Threshold</th>
-                                <th>Error Threshold</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="endpoints-table-body">
-                            <!-- Endpoints will be dynamically added here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <!-- Main Content -->
+<div class="main-content">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <button id="mobile-toggle" class="mobile-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <h1>API Configuration</h1>
     </div>
+    <div class="header-right">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search keys..." />
+      </div>
+      <button class="icon-button">
+        <i class="fas fa-bell"></i>
+        <span class="badge">3</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Generate API Key Button -->
+  <div style="margin: 15px 0;">
+    <button id="generate-api-key-btn" class="icon-button">
+      <i class="fas fa-key"></i> Generate API Key
+    </button>
+  </div>
+
+  <!-- API Keys List -->
+  <div class="endpoints-table-container">
+    <h3>Your API Keys</h3>
+    <table class="endpoints-table">
+      <thead>
+        <tr>
+          <th>API Key</th>
+          <th>Endpoint</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="api-keys-table-body">
+        <!-- Existing keys from server rendered here -->
+        {% for key in api_keys %}
+          <tr data-key-id="{{ key.id }}">
+            <td class="api-key">{{ key.key }}</td>
+            <td>
+              <input type="text" class="endpoint-input" value="{{ key.endpoint|default:'' }}" placeholder="Enter endpoint" />
+            </td>
+            <td>{{ key.is_active|yesno:"Active,Inactive" }}</td>
+            <td>
+              <button class="icon-button delete-key-btn" title="Delete Key">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4" style="text-align:center;">No API keys yet.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  // Handler for generating API key via AJAX (example)
+  document.getElementById('generate-api-key-btn').addEventListener('click', () => {
+    fetch("", { method: 'POST', headers: {'X-CSRFToken': '{{ csrf_token }}' } })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const tbody = document.getElementById('api-keys-table-body');
+          // Remove "No API keys" row if present
+          const noKeysRow = tbody.querySelector('tr td[colspan="4"]');
+          if (noKeysRow) noKeysRow.parentNode.remove();
+
+          const tr = document.createElement('tr');
+          tr.dataset.keyId = data.key.id;
+
+          tr.innerHTML = `
+            <td class="api-key">${data.key.key}</td>
+            <td><input type="text" class="endpoint-input" placeholder="Enter endpoint" /></td>
+            <td>Active</td>
+            <td>
+              <button class="icon-button delete-key-btn" title="Delete Key">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          `;
+
+          tbody.appendChild(tr);
+        } else {
+          alert('Error generating API key.');
+        }
+      });
+  });
+
+  // Delegate delete button clicks
+  document.getElementById('api-keys-table-body').addEventListener('click', function (e) {
+    if (e.target.closest('.delete-key-btn')) {
+      const tr = e.target.closest('tr');
+      const keyId = tr.dataset.keyId;
+
+      fetch(`{%}`.replace('0', keyId), {
+        method: 'DELETE',
+        headers: {'X-CSRFToken': '{{ csrf_token }}'}
+      })
+        .then(resp => resp.json())
+        .then(data => {
+          if (data.success) {
+            tr.remove();
+            // Optionally show "No API keys yet" if none remain
+            if (!this.querySelector('tr')) {
+              const tbody = this;
+              const emptyRow = document.createElement('tr');
+              emptyRow.innerHTML = '<td colspan="4" style="text-align:center;">No API keys yet.</td>';
+              tbody.appendChild(emptyRow);
+            }
+          } else {
+            alert('Failed to delete API key.');
+          }
+        });
+    }
+  });
+</script>
+
 
     <script src="dashboard.js"></script>
-    <script src="config.js"></script>
+    <script src="{% static 'config.js' %}"></script>
 </body>
 </html>

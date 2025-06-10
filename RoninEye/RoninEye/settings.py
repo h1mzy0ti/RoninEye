@@ -39,12 +39,21 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 EXTERNAL_APPS = [
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'users',
+    'api_monitor',
     'dashboard',
-    'api_monitor'
 ]
 INSTALLED_APPS += EXTERNAL_APPS
 
+AUTH_USER_MODEL = 'users.CustomUser'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -121,6 +130,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
