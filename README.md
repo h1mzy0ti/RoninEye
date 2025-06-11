@@ -1,5 +1,5 @@
 
-# 🛡️ RoninEye - API Performance Monitoring App
+# RoninEye - API Performance Monitoring App
 
 RoninEye is a lightweight and extensible API performance monitoring application. It allows developers and teams to track real-time metrics such as API uptime, error rates, response time, and request volumes. The application comes with a Django-based backend, powerful dashboard visualizations using ApexCharts, and an easy-to-integrate SDK for monitored services.
 
@@ -11,10 +11,10 @@ RoninEye is a lightweight and extensible API performance monitoring application.
 </div>
 
 <div align="center">
-  <img src="images/1.png" width="45%" style="margin: 10px;">
-  <img src="images/2.png" width="45%" style="margin: 10px;"><br>
-  <img src="images/3.png" width="45%" style="margin: 10px;">
-  <img src="images/4.png" width="45%" style="margin: 10px;">
+  <img src="/screenshots/RE0.png" width="45%" style="margin: 10px;">
+  <img src="/screenshots/re1.png" width="45%" style="margin: 10px;"><br>
+  <img src="/screenshots/RE2.png" width="45%" style="margin: 10px;">
+  <img src="/screenshots/3.png" width="45%" style="margin: 10px;">
 </div>
 
 ## 🚀 Features
