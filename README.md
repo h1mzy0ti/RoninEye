@@ -82,7 +82,7 @@ pip install path/to/ronineye_sdk.whl
 
 ### ⚙️ Configuration
 
-In your `settings.py` of the monitored app and in the config.py of ronineye_sdk:
+In your `settings.py` of the monitored app and in the `config.py` of ronineye_sdk:
 ```python
 RONINEYE_API_KEY = "your-generated-key"
 RONINEYE_MONITOR_URL = "http://127.0.0.1:8001/api-monitor/collect-metrics/ or your localhost" 
