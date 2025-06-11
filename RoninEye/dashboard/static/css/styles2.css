@@ -1,4 +1,4 @@
-25/* Base Styles */
+/* Base Styles */
 :root {
     --primary-color: #4f46e5;
     --primary-hover: #4338ca;
@@ -55,6 +55,10 @@ button {
 .dashboard {
     display: flex;
     min-height: 100vh;
+}
+.sidebar {
+    background-color: var(--sidebar-bg, #1e293b) !important;
+    color: var(--sidebar-text, #f3f4f6) !important;
 }
 
 /* Sidebar Styles */

@@ -18,9 +18,6 @@
                     <img src="{% static 'image/logo_no_bgpng.png' %}" alt="Ronin Eye Logo" style="width: 58px; height: auto; display: block;" />
                     <span>Ronin Eye</span>
                 </div>
-                <button id="sidebar-toggle" class="sidebar-toggle">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
             </div>
             <div class="sidebar-menu">
                 <ul>
@@ -34,12 +31,6 @@
                         <a href="{%url 'configuration'%}">
                             <i class="fas fa-sliders-h"></i>
                             <span>Configurations</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{%url 'settings'%}">
-                            <i class="fas fa-cog"></i>
-                            <span>Settings</span>
                         </a>
                     </li>
                     <li>
@@ -87,114 +78,140 @@
     </div>
   </header>
 
+<!-- API Keys List -->
+<div class="endpoints-table-container">
+  <h3>Your API Keys</h3>
+
   <!-- Generate API Key Button -->
-  <div style="margin: 15px 0;">
-    <button id="generate-api-key-btn" class="icon-button">
-      <i class="fas fa-key"></i> Generate API Key
+  <div style="margin: 20px 0; display: flex; justify-content: center;">
+    <button id="generate-api-key-btn"
+      style="background: linear-gradient(90deg, #295cba 25%, #27bdf8 100%);
+             color: #f7f5f5;
+             border: none;
+             border-radius: 30px;
+             padding: 12px 32px;
+             font-size: 1.1rem;
+             font-weight: 600;
+             box-shadow: 0 5px 13px rgba(0, 0, 0, 0.18);
+             cursor: pointer;
+             display: flex;
+             align-items: center;
+             gap: 10px;
+             transition: background 0.2s, box-shadow 0.2s, transform 0.1s;"
+      onmouseover="this.style.background='#357ae8'; this.style.boxShadow='0 6px 20px rgba(53,122,232,0.2)'; this.style.transform='translateY(-2px)'"
+      onmouseout="this.style.background='linear-gradient(90deg, #4f8cff 0%, #38c6ff 100%)'; this.style.boxShadow='0 4px 14px rgba(79, 140, 255, 0.18)'; this.style.transform='none'">
+      <i class="fas fa-key" style="font-size: 1.2em;"></i>
+      Generate API-Key
     </button>
   </div>
 
-  <!-- API Keys List -->
-  <div class="endpoints-table-container">
-    <h3>Your API Keys</h3>
-    <table class="endpoints-table">
-      <thead>
-        <tr>
-          <th>API Key</th>
-          <th>Endpoint</th>
-          <th>Status</th>
-          <th>Actions</th>
+  <table class="endpoints-table">
+    <thead>
+      <tr>
+        <th>API Key</th>
+        <th>Endpoint</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="api-keys-table-body">
+      {% for key in api_keys %}
+        <tr data-key-id="{{ key.id }}">
+          <td class="api-key">{{ key.key }}</td>
+          <td><input type="text" class="endpoint-input" value="{{ key.endpoint|default:'' }}" placeholder="/api-monitor/collect-metrics/" /></td>
+          <td>{{ key.is_active|yesno:"Active,Inactive" }}</td>
+          <td>
+            <button class="icon-button delete-key-btn" title="Delete Key">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
         </tr>
-      </thead>
-      <tbody id="api-keys-table-body">
-        <!-- Existing keys from server rendered here -->
-        {% for key in api_keys %}
-          <tr data-key-id="{{ key.id }}">
-            <td class="api-key">{{ key.key }}</td>
-            <td>
-              <input type="text" class="endpoint-input" value="{{ key.endpoint|default:'' }}" placeholder="Enter endpoint" />
-            </td>
-            <td>{{ key.is_active|yesno:"Active,Inactive" }}</td>
-            <td>
-              <button class="icon-button delete-key-btn" title="Delete Key">
-                <i class="fas fa-trash"></i>
-              </button>
-            </td>
-          </tr>
-        {% empty %}
-          <tr>
-            <td colspan="4" style="text-align:center;">No API keys yet.</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+      {% empty %}
+        <tr>
+          <td colspan="4" style="text-align:center;">No API keys yet.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 
+<!-- Scripts -->
+<!-- Scripts -->
 <script>
-  // Handler for generating API key via AJAX (example)
-  document.getElementById('generate-api-key-btn').addEventListener('click', () => {
-    fetch("", { method: 'POST', headers: {'X-CSRFToken': '{{ csrf_token }}' } })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          const tbody = document.getElementById('api-keys-table-body');
-          // Remove "No API keys" row if present
-          const noKeysRow = tbody.querySelector('tr td[colspan="4"]');
-          if (noKeysRow) noKeysRow.parentNode.remove();
+  const generateBtn = document.getElementById('generate-api-key-btn');
+  const tableBody = document.getElementById('api-keys-table-body');
+  const csrfToken = "{{ csrf_token }}";
 
-          const tr = document.createElement('tr');
-          tr.dataset.keyId = data.key.id;
+  generateBtn.addEventListener('click', () => {
+    fetch("{% url 'generate_api_key' %}", {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': csrfToken,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({})  // No monitored_api_id
+    })
+    .then(res => {
+      if (!res.ok) throw new Error('Request failed');
+      return res.json();
+    })
+    .then(data => {
+      if (data.success) {
+        const noKeysRow = tableBody.querySelector('tr td[colspan]');
+        if (noKeysRow) noKeysRow.closest('tr').remove();
 
-          tr.innerHTML = `
-            <td class="api-key">${data.key.key}</td>
-            <td><input type="text" class="endpoint-input" placeholder="Enter endpoint" /></td>
-            <td>Active</td>
-            <td>
-              <button class="icon-button delete-key-btn" title="Delete Key">
-                <i class="fas fa-trash"></i>
-              </button>
-            </td>
-          `;
-
-          tbody.appendChild(tr);
-        } else {
-          alert('Error generating API key.');
-        }
-      });
+        const tr = document.createElement('tr');
+        tr.dataset.keyId = data.key.id;
+        tr.innerHTML = `
+          <td class="api-key">${data.key.key}</td>
+          <td><input type="text" class="endpoint-input" placeholder="Enter endpoint" /></td>
+          <td>Active</td>
+          <td>
+            <button class="icon-button delete-key-btn" title="Delete Key">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        `;
+        tableBody.appendChild(tr);
+      } else {
+        alert(data.message || 'Failed to generate API key.');
+      }
+    })
+    .catch(() => alert('Something went wrong while generating the API key.'));
   });
 
-  // Delegate delete button clicks
-  document.getElementById('api-keys-table-body').addEventListener('click', function (e) {
-    if (e.target.closest('.delete-key-btn')) {
-      const tr = e.target.closest('tr');
-      const keyId = tr.dataset.keyId;
+  tableBody.addEventListener('click', (e) => {
+    const btn = e.target.closest('.delete-key-btn');
+    if (!btn) return;
 
-      fetch(`{%}`.replace('0', keyId), {
-        method: 'DELETE',
-        headers: {'X-CSRFToken': '{{ csrf_token }}'}
-      })
-        .then(resp => resp.json())
-        .then(data => {
-          if (data.success) {
-            tr.remove();
-            // Optionally show "No API keys yet" if none remain
-            if (!this.querySelector('tr')) {
-              const tbody = this;
-              const emptyRow = document.createElement('tr');
-              emptyRow.innerHTML = '<td colspan="4" style="text-align:center;">No API keys yet.</td>';
-              tbody.appendChild(emptyRow);
-            }
-          } else {
-            alert('Failed to delete API key.');
-          }
-        });
-    }
+    const row = btn.closest('tr');
+    const keyId = row.dataset.keyId;
+
+    fetch(`/api-monitor/delete-api-key/${keyId}/`, {
+      method: 'DELETE',
+      headers: {
+        'X-CSRFToken': csrfToken
+      }
+    })
+    .then(res => {
+      if (!res.ok) throw new Error('Request failed');
+      return res.json();
+    })
+    .then(data => {
+      if (data.success) {
+        row.remove();
+        if (!tableBody.querySelector('tr')) {
+          const emptyRow = document.createElement('tr');
+          emptyRow.innerHTML = '<td colspan="4" style="text-align:center;">No API keys yet.</td>';
+          tableBody.appendChild(emptyRow);
+        }
+      } else {
+        alert('Failed to delete API key.');
+      }
+    })
+    .catch(() => alert('Something went wrong while deleting the API key.'));
   });
 </script>
 
 
-    <script src="dashboard.js"></script>
-    <script src="{% static 'config.js' %}"></script>
-</body>
-</html>
+<script src="{% static 'config.js' %}"></script>
