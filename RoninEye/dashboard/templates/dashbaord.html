@@ -12,53 +12,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-        <script>
-            var responseTimeData = JSON.parse("{{ response_time_json|escapejs }}");
-            var errorRateData = JSON.parse("{{ error_rate_json|escapejs }}");
-            var statusCodeDist = JSON.parse("{{ status_distribution_json|escapejs }}");
-            var uptimeData = JSON.parse("{{ uptime_json|escapejs }}");
-            var requestVolumeData = JSON.parse("{{ request_volume_json|escapejs }}");
-            var callsHeatmapData = JSON.parse("{{ calls_heatmap_json|escapejs }}");
-            var errorsHeatmapData = JSON.parse("{{ errors_heatmap_json|escapejs }}");
-            var heatmapCallsChart = new ApexCharts(document.querySelector("#heatmap-calls-chart"), {
-        chart: { type: 'heatmap', height: 250 },
-        series: callsHeatmapData,
-        plotOptions: {
-            heatmap: {
-                colorScale: {
-                    ranges: [
-                        { from: 0, to: 0, color: '#f0f0f0', name: 'No Requests' },
-                        { from: 1, to: 20, color: '#FEB019', name: 'Low' },
-                        { from: 21, to: 50, color: '#FF4560', name: 'Medium' },
-                        { from: 51, to: 1000, color: '#775DD0', name: 'High' }
-                    ]
-                }
-            }
-        }
-    });
-    heatmapCallsChart.render();
-
-    var heatmapErrorsChart = new ApexCharts(document.querySelector("#heatmap-errors-chart"), {
-        chart: { type: 'heatmap', height: 250 },
-        series: errorsHeatmapData,
-        plotOptions: {
-            heatmap: {
-                colorScale: {
-                    ranges: [
-                        { from: 0, to: 0, color: '#f0f0f0', name: 'No Errors' },
-                        { from: 1, to: 5, color: '#FFB200', name: 'Few Errors' },
-                        { from: 6, to: 100, color: '#FF0000', name: 'High Errors' }
-                    ]
-                }
-            }
-        }
-    });
-    heatmapErrorsChart.render();
-        </script>
-
-
-        <script src="{% static 'js/charts.js' %}"></script>
-
     </head>
     <body>
 
@@ -278,6 +231,19 @@
         </div> <!-- End of main-content -->
 
     </div> <!-- End of dashboard wrapper -->
+    <script>
+            var responseTimeData = JSON.parse("{{ response_time_json|escapejs }}");
+            var errorRateData = JSON.parse("{{ error_rate_json|escapejs }}");
+            var statusCodeDist = JSON.parse("{{ status_distribution_json|escapejs }}");
+            var uptimeData = JSON.parse("{{ uptime_json|escapejs }}");
+            var requestVolumeData = JSON.parse("{{ request_volume_json|escapejs }}");
+            var callsHeatmapData = JSON.parse("{{ calls_heatmap_json|escapejs }}");
+            var errorsHeatmapData = JSON.parse("{{ errors_heatmap_json|escapejs }}");
+            
+        </script>
+
+
+        <script src="{% static 'js/charts.js' %}"></script>
 
     </body>
     </html>

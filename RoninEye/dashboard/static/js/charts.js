@@ -36,13 +36,8 @@ document.addEventListener("DOMContentLoaded", function () {
         xaxis: { type: 'datetime' }
     }).render();
 
-    // Hourly API Calls Heatmap
-    // Hourly API Calls Heatmap
     new ApexCharts(document.querySelector("#heatmap-calls-chart"), {
-        chart: {
-            type: 'heatmap',
-            height: 250
-        },
+        chart: { type: 'heatmap', height: 250 },
         plotOptions: {
             heatmap: {
                 shadeIntensity: 0.5,
@@ -58,25 +53,21 @@ document.addEventListener("DOMContentLoaded", function () {
         series: callsHeatmapData
     }).render();
 
-// Hourly Errors Heatmap
-new ApexCharts(document.querySelector("#heatmap-errors-chart"), {
-    chart: {
-        type: 'heatmap',
-        height: 250
-    },
-    plotOptions: {
-        heatmap: {
-            shadeIntensity: 0.5,
-            colorScale: {
-                ranges: [
-                    { from: 0, to: 2, color: "#00A100", name: "Low" },
-                    { from: 3, to: 10, color: "#FFB200", name: "Medium" },
-                    { from: 11, to: 1000, color: "#FF0000", name: "High" }
-                ]
+    // Hourly Errors Heatmap
+    new ApexCharts(document.querySelector("#heatmap-errors-chart"), {
+        chart: { type: 'heatmap', height: 250 },
+        plotOptions: {
+            heatmap: {
+                shadeIntensity: 0.5,
+                colorScale: {
+                    ranges: [
+                        { from: 0, to: 2, color: "#00A100", name: "Low" },
+                        { from: 3, to: 10, color: "#FFB200", name: "Medium" },
+                        { from: 11, to: 1000, color: "#FF0000", name: "High" }
+                    ]
+                }
             }
-        }
-    },
-    series: errorsHeatmapData
-}).render();
-
+        },
+        series: errorsHeatmapData
+    }).render();
 });
