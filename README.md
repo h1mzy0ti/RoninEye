@@ -10,7 +10,7 @@ RoninEye is a lightweight and extensible API performance monitoring application.
 <img src="/screenshots/RE0.png" width="55%" style="margin: 10px;">
 </div>
 
-<div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">
+<div align="center">
   <img src="/screenshots/2.png" width="22%" style="margin: 14px;">
   <img src="/screenshots/re1.png" width="45%" style="margin: 10px;"><br>
   <img src="/screenshots/RE2.png" width="45%" style="margin: 10px;">
